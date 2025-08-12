@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Priyam Pandey — Cinematic Portfolio</title>
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg:#070708;
+      --panel:#0f1113;
+      --muted:#9aa3ad;
+      --accent1:#e50914; /* netflix red */
+      --accent2:#5b6cff; /* jio-blue-ish */
+      --glass: rgba(255,255,255,0.04);
+      --glass-2: rgba(255,255,255,0.02);
+      --maxwidth:1200px;
+      --glass-border: rgba(255,255,255,0.03);
+      --radius:12px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;
+      background:linear-gradient(180deg,#050507 0%, #0a0b0c 100%);
+      color:#e6eef6;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* NAV */
+    .nav{
+      position:fixed;top:18px;left:0;right:0;z-index:60;display:flex;justify-content:center;pointer-events:none;
+    }
+    .nav-inner{
+      width:calc(100% - 40px);max-width:var(--maxwidth);
+      background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      backdrop-filter: blur(8px);
+      border-radius:20px;padding:12px 18px;display:flex;align-items:center;gap:16px;pointer-events:auto;
+      box-shadow:0 10px 40px rgba(0,0,0,0.6);
+      transition:transform .25s ease, box-shadow .25s ease;
+    }
+    .brand{font-weight:800;letter-spacing:0.6px;color:var(--accent1);display:flex;align-items:center;gap:10px}
+    .brand .dot{width:10px;height:10px;background:linear-gradient(90deg,var(--accent1),var(--accent2));border-radius:50%}
+    nav ul{display:flex;gap:16px;margin:0;padding:0;list-style:none}
+    nav a{color:var(--muted);text-decoration:none;font-weight:600;font-size:14px;padding:6px 8px;border-radius:10px;transition:all .18s ease}
+    nav a.active, nav a:hover{color:white;background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02))}
+    .cta{margin-left:auto;display:flex;gap:10px}
+    .btn{padding:8px 14px;border-radius:12px;font-weight:700;border:0;cursor:pointer}
+    .btn-light{background:transparent;color:var(--accent2);border:1px solid rgba(91,108,255,0.12)}
+    .btn-primary{background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;box-shadow:0 10px 30px rgba(91,108,255,0.06)}
+
+    /* HERO */
+    .hero{height:92vh;max-height:980px;position:relative;display:flex;align-items:center;justify-content:center}
+    .hero-bg{position:absolute;inset:0;z-index:0;overflow:hidden;border-bottom-left-radius:60px;border-bottom-right-radius:60px}
+    .slide{position:absolute;inset:0;background-size:cover;background-position:center;filter:contrast(.94) saturate(.95);transform-origin:center;transition:opacity 1s ease, transform 1s ease;opacity:0}
+    .slide.visible{opacity:1;transform:scale(1)}
+    .slide::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg, rgba(4,6,8,0.45) 8%, rgba(4,6,8,0.80) 60%)}
+    .overlay-gradient{position:absolute;inset:0;mix-blend-mode:screen;opacity:0.45;background:
+      radial-gradient(600px 300px at 18% 20%, rgba(229,9,20,0.54), transparent 12%),
+      radial-gradient(600px 300px at 82% 74%, rgba(91,108,255,0.45), transparent 12%);pointer-events:none}
+
+    .hero-inner{position:relative;z-index:10;max-width:var(--maxwidth);width:100%;display:flex;gap:36px;align-items:center;padding:36px}
+    .hero-left{flex:1;min-width:320px}
+    .role{font-size:14px;color:var(--muted);margin-bottom:12px}
+    .title{font-size:48px;line-height:1.02;font-weight:800;margin:0 0 14px}
+    .title .accent{background:linear-gradient(90deg,var(--accent1),var(--accent2));-webkit-background-clip:text;background-clip:text;color:transparent}
+    .bio{color:#cbd7e6;max-width:640px;margin-bottom:20px;font-size:16px}
+    .hero-actions{display:flex;gap:12px}
+
+    /* portrait */
+    .hero-right{width:380px;max-width:40%;min-width:240px}
+    .portrait{border-radius:16px;overflow:hidden;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));box-shadow: 0 30px 80px rgba(2,4,8,0.7);border:1px solid var(--glass-border);padding:10px;transition:transform .35s cubic-bezier(.2,.9,.2,1)}
+    .portrait:hover{transform:translateY(-6px) scale(1.01)}
+    .portrait img{width:100%;height:420px;object-fit:cover;border-radius:12px;display:block}
+    .portrait-meta{display:flex;justify-content:space-between;align-items:center;padding:12px}
+    .meta-left{line-height:1}
+    .meta-left .name{font-weight:700}
+    .meta-left .loc{font-size:13px;color:var(--muted)}
+
+    /* SECTIONS */
+    .container{max-width:var(--maxwidth);margin:64px auto;padding:0 20px}
+    h2.section-title{font-size:20px;margin:0 0 20px;border-left:4px solid rgba(255,255,255,0.03);padding-left:12px;color:#fff}
+
+    /* projects */
+    .projects-row{display:flex;gap:20px;overflow-x:auto;padding-bottom:10px}
+    .card{min-width:320px;background:linear-gradient(180deg,var(--panel), rgba(255,255,255,0.02));border-radius:16px;padding:16px;border:1px solid var(--glass-border);backdrop-filter: blur(10px);box-shadow:0 18px 60px rgba(2,4,8,0.6);transition:transform .28s ease, box-shadow .28s ease;cursor:pointer}
+    .card:hover{transform:translateY(-8px) rotateX(4deg);box-shadow:0 30px 80px rgba(2,4,8,0.75)}
+    .card .thumb{height:190px;border-radius:12px;overflow:hidden;margin-bottom:14px;position:relative}
+    .card .thumb img{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.02);transition:transform .7s ease}
+    .card:hover .thumb img{transform:scale(1.06)}
+    .card h3{margin:0 0 8px;font-size:18px}
+    .card p{font-size:14px;color:var(--muted);margin:0}
+    .card .tags{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+    .tag{background:linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:6px 10px;border-radius:10px;font-size:12px;color:var(--muted)}
+
+    /* skills grid */
+    .skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+    .skill{background:var(--glass);padding:12px;border-radius:10px}
+    .skill h4{margin:0 0 8px}
+    .progress{height:10px;background:var(--glass-2);border-radius:999px;overflow:hidden}
+    .progress > i{display:block;height:100%;background:linear-gradient(90deg,var(--accent1),var(--accent2));width:0;transition:width .8s cubic-bezier(.2,.9,.2,1)}
+
+    /* contact */
+    .contact{display:grid;grid-template-columns:1fr 360px;gap:24px}
+    .contact form{display:flex;flex-direction:column;gap:10px}
+    .input,textarea{background:transparent;border:1px solid rgba(255,255,255,0.05);padding:12px;border-radius:10px;color:#e6eef6}
+    textarea{min-height:140px}
+
+    footer{padding:40px 20px;text-align:center;color:var(--muted);margin-top:40px}
+
+    /* modal (full-screen cinematic details) */
+    .modal {
+      position:fixed; inset:0; z-index:200; display:none; align-items:center; justify-content:center;
+      background:linear-gradient(180deg, rgba(0,0,0,0.6), rgba(0,0,0,0.78));
+      backdrop-filter: blur(6px);
+      padding:40px;
+    }
+    .modal-inner {
+      width:100%; max-width:1100px; border-radius:18px; overflow:hidden; position:relative; color:white;
+      box-shadow:0 40px 140px rgba(0,0,0,0.8);
+      transform-origin:center; animation:modalIn .36s cubic-bezier(.2,.9,.2,1);
+    }
+    @keyframes modalIn { from{ opacity:0; transform:translateY(8px) scale(.98) } to{ opacity:1; transform:none } }
+    .modal-visual {
+      height:420px; background-size:cover; background-position:center; filter:contrast(.9) saturate(.95);
+      position:relative;
+    }
+    .modal-visual::after{
+      content:''; position:absolute; inset:0; background:linear-gradient(180deg, rgba(4,6,8,0.15), rgba(4,6,8,0.78));
+    }
+    .modal-content {
+      display:flex; gap:28px; padding:28px; align-items:flex-start; background:linear-gradient(180deg, rgba(10,10,12,0.45), rgba(5,6,8,0.35));
+    }
+    .modal-left{flex:1}
+    .modal-right{width:340px}
+    .modal h2{margin:0 0 10px;font-size:26px}
+    .modal p{color:#cbd7e6;line-height:1.5}
+    .modal .meta{margin-top:12px;color:var(--muted);font-size:14px}
+    .modal .links{display:flex;flex-direction:column;gap:10px;margin-top:18px}
+    .link-btn{display:inline-flex;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;background:linear-gradient(90deg,var(--accent1),var(--accent2));color:white;font-weight:700;text-decoration:none;box-shadow:0 8px 30px rgba(0,0,0,0.6)}
+    .close-btn{position:absolute;right:18px;top:18px;background:rgba(255,255,255,0.03);border-radius:10px;padding:8px 10px;cursor:pointer;font-weight:700;color:var(--muted)}
+    .modal-tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+    .modal-tags .tag{background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:10px;color:var(--muted)}
+
+    /* responsive */
+    @media(max-width:980px){
+      .hero-inner{padding:20px;gap:18px}
+      .portrait img{height:300px}
+      .card{min-width:260px}
+      .modal-content{flex-direction:column}
+      .modal-right{width:100%}
+      .modal-visual{height:240px}
+      .projects-row{gap:16px}
+    }
+
+    /* subtle reveals */
+    .reveal{opacity:0;transform:translateY(16px);transition:all .7s cubic-bezier(.2,.9,.2,1);will-change:transform,opacity}
+    .reveal.show{opacity:1;transform:none}
+
+    /* scrollbar */
+    .projects-row::-webkit-scrollbar{height:8px}
+    .projects-row::-webkit-scrollbar-thumb{background:linear-gradient(90deg,var(--accent1),var(--accent2));border-radius:10px}
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <div class="nav">
+    <div class="nav-inner">
+      <div class="brand"><span class="dot"></span>Priyam</div>
+      <nav>
+        <ul>
+          <li><a href="#home" class="active">Home</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#experience">Experience</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="cta">
+        <button class="btn btn-light" onclick="downloadCV()">Download CV</button>
+        <button class="btn btn-primary" onclick="scrollToSection('contact')">Hire Me</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- HERO -->
+  <header id="home" class="hero">
+    <div class="hero-bg">
+      <!-- Replace these with your local images in /images/ or keep as-is and place those files there -->
+      <div class="slide visible" style="background-image: url('images/hero1.jpg')"></div>
+      <div class="slide" style="background-image: url('images/hero2.jpg')"></div>
+      <div class="slide" style="background-image: url('images/hero3.jpg')"></div>
+      <div class="overlay-gradient"></div>
+    </div>
+
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="role">Data Analyst • Software Developer • Computer Vision</div>
+        <h1 class="title">Priyam <span class="accent">Pandey</span></h1>
+        <p class="bio">Results-driven Data Analyst and Software Developer with experience building backend APIs, computer-vision tools, and interactive dashboards. I love transforming data into clear, elegant insights and building products that scale.</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="scrollToSection('projects')">View Projects</button>
+          <button class="btn btn-light" onclick="scrollToSection('contact')">Contact</button>
+        </div>
+      </div>
+
+      <aside class="hero-right">
+        <div class="portrait">
+          <img src="images/portrait.png" alt="Priyam portrait">
+          <div class="portrait-meta">
+            <div class="meta-left"><div class="name">Priyam Pandey</div><div class="loc">Varanasi, Uttar Pradesh</div></div>
+            <div class="meta-right"><div style="font-size:13px;color:var(--muted)">Senior Engineer @ Adani</div></div>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main>
+    <!-- Projects -->
+    <section id="projects" class="container reveal">
+      <h2 class="section-title">Featured Projects</h2>
+      <div class="projects-row">
+        <!-- Basketball -->
+        <article class="card" role="button" tabindex="0" onclick="openModal('basketball')" onkeypress="if(event.key==='Enter') openModal('basketball')">
+          <div class="thumb"><img src="images/project_basketball.jpg" alt="Basketball Analytics"></div>
+          <h3>Basketball Analytics (Computer Vision + Flask)</h3>
+          <p>Video processing API that extracts shot timing, release angle, and trajectory using OpenCV & Flask. Microservice tested via Postman.</p>
+          <div class="tags"><span class="tag">Python</span><span class="tag">OpenCV</span><span class="tag">Flask</span></div>
+        </article>
+
+        <!-- Ludo -->
+        <article class="card" role="button" tabindex="0" onclick="openModal('ludo')" onkeypress="if(event.key==='Enter') openModal('ludo')">
+          <div class="thumb"><img src="images/project_ludo.jpg" alt="Ludo Game"></div>
+          <h3>Ludo Game — Data Structures (Java)</h3>
+          <p>OOP-based Ludo simulation with robust game state management and optional AI opponents. Built with clean data structures and tests.</p>
+          <div class="tags"><span class="tag">Java</span><span class="tag">OOP</span><span class="tag">Algorithms</span></div>
+        </article>
+
+        <!-- Data Analysis (combined) -->
+        <article class="card" role="button" tabindex="0" onclick="openModal('dataanalysis')" onkeypress="if(event.key==='Enter') openModal('dataanalysis')">
+          <div class="thumb"><img src="images/project_dataanalysis.jpg" alt="Data Analysis Projects"></div>
+          <h3>Data Analysis Projects</h3>
+          <p>Collection of sales & market dashboards and analytics built using SQL, Pandas, Excel automation, and Power BI for executive reporting.</p>
+          <div class="tags"><span class="tag">Power BI</span><span class="tag">SQL</span><span class="tag">Pandas</span></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="container reveal">
+      <h2 class="section-title">Experience & Research</h2>
+      <div class="timeline">
+        <div class="card">
+          <h3>Senior Engineer — Data Management Analyst, Adani Group</h3>
+          <p style="color:var(--muted)">Managed production data flows, built Power BI dashboards, automated MIS reporting (reduced prep time by 30%), and performed data extraction from SAP.</p>
+        </div>
+        <div class="card">
+          <h3>Research Intern — IIT BHU</h3>
+          <p style="color:var(--muted)">Adsorption of dye using biochar; experiments with SEM, FTIR, and XRD under Prof. R.S. Singh.</p>
+        </div>
+        <div class="card">
+          <h3>Summer Intern — DISHA DYE CHEM Pvt Ltd</h3>
+          <p style="color:var(--muted)">Hands-on exposure to industrial dye manufacturing and process workflows.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section id="skills" class="container reveal">
+      <h2 class="section-title">Skills</h2>
+      <div class="skills-grid">
+        <div class="skill">
+          <h4>Programming</h4>
+          <div class="progress" data-value="95"><i></i></div>
+          <div style="font-size:13px;color:var(--muted);margin-top:8px">Python, Java, C++, JavaScript</div>
+        </div>
+        <div class="skill">
+          <h4>Data & Analytics</h4>
+          <div class="progress" data-value="92"><i></i></div>
+          <div style="font-size:13px;color:var(--muted);margin-top:8px">Power BI, SQL, Excel, Pandas</div>
+        </div>
+        <div class="skill">
+          <h4>Web & Backend</h4>
+          <div class="progress" data-value="86"><i></i></div>
+          <div style="font-size:13px;color:var(--muted);margin-top:8px">HTML, CSS, Flask, REST API</div>
+        </div>
+        <div class="skill">
+          <h4>Computer Vision</h4>
+          <div class="progress" data-value="84"><i></i></div>
+          <div style="font-size:13px;color:var(--muted);margin-top:8px">OpenCV, NumPy</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" class="container reveal">
+      <h2 class="section-title">Contact</h2>
+      <div class="contact">
+        <div>
+          <p style="color:var(--muted)">Want to work together or see the full CV? Drop a message or connect on LinkedIn / GitHub.</p>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <a class="btn btn-light" href="mailto:priyampandey077@gmail.com">Email</a>
+            <a class="btn btn-light" href="https://www.linkedin.com/in/priyam-pandey/" target="_blank">LinkedIn</a>
+            <a class="btn btn-light" href="https://github.com/Priyam0712/PriyamPandey0712" target="_blank">GitHub</a>
+          </div>
+        </div>
+
+        <form onsubmit="sendForm(event)">
+          <input class="input" placeholder="Your name" required />
+          <input class="input" type="email" placeholder="Your email" required />
+          <textarea placeholder="Message" required></textarea>
+          <button type="submit" class="btn btn-primary">Send message</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div style="max-width:var(--maxwidth);margin:0 auto;padding:0 20px">© 2025 Priyam Pandey • Designed & built with care</div>
+  </footer>
+
+  <!-- Cinematic Modal (Netflix-style) -->
+  <div class="modal" id="projectModal" aria-hidden="true">
+    <div class="modal-inner" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-visual" id="modalVisual" aria-hidden="true"></div>
+      <div class="modal-content">
+        <div class="modal-left">
+          <h2 id="modalTitle"></h2>
+          <p id="modalDesc"></p>
+          <div class="modal-tags" id="modalTags"></div>
+          <div class="links" id="modalLinks"></div>
+        </div>
+        <div class="modal-right">
+          <div class="meta">Tech & Details</div>
+          <p id="modalMeta" style="color:var(--muted);margin-top:8px"></p>
+        </div>
+        <button class="close-btn" aria-label="Close" onclick="closeModal()">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ====== DATA (projects + links) ====== */
+    const PROJECTS = {
+      basketball: {
+        title: 'Basketball Analytics (Computer Vision + Flask)',
+        desc: 'Video processing API that extracts shot timing, release angle, player tracking and shot trajectory using OpenCV, NumPy, and a Flask microservice. Designed for automated video analysis and validated through Postman tests. Deployed as a modular API for easy integration.',
+        image: 'images/project_basketball.jpg',
+        meta: 'Python • OpenCV • Flask • API • Video Processing',
+        links: [
+          { label: 'GitHub - Basketball Analysis', url: 'https://github.com/Priyam0712/basketball-analysis-cv' }
+        ],
+        tags: ['Computer Vision','API','Python']
+      },
+      ludo: {
+        title: 'Ludo Game — Data Structures (Java)',
+        desc: 'OOP-based Ludo simulation with intelligent game-state management, turn logic, and optional AI opponents. Built with clear separation of concerns and efficient data structures to scale for multiplayer sessions and testing.',
+        image: 'images/project_ludo.jpg',
+        meta: 'Java • OOP • Algorithms • Game Simulation',
+        links: [
+          { label: 'GitHub - Ludo (Java)', url: 'https://github.com/yourgithubusername/ludo-game-java' }
+        ],
+        tags: ['Java','OOP','DSA']
+      },
+      dataanalysis: {
+        title: 'Data Analysis Projects',
+        desc: 'A portfolio of data analysis and dashboarding projects: Suzuki Car Sales Dashboard, Power BI Sales Dashboard, and Amazon Electronics Sales Analysis. Work includes EDA, SQL queries, Pandas transformation pipelines, and executive Power BI dashboards.',
+        image: 'images/project_dataanalysis.jpg',
+        meta: 'SQL • Pandas • Power BI • Excel Automation',
+        links: [
+          { label: 'Suzuki Car Sales Dashboard', url: 'https://github.com/Priyam0712/suzuki-car-sales-dashboard' },
+          { label: 'Power BI Sales Dashboard', url: 'https://github.com/Priyam0712/powerbi-sales-dashboard' },
+          { label: 'Amazon Electronics Analysis', url: 'https://github.com/Priyam0712/amazon-electronics-analysis' }
+        ],
+        tags: ['Power BI','SQL','Pandas']
+      }
+    };
+
+    /* ====== HERO SLIDES ====== */
+    const slides = document.querySelectorAll('.slide');
+    let slideIndex = 0;
+    function showSlide(n){
+      slides.forEach((s,i)=> s.classList.toggle('visible', i===n));
+    }
+    setInterval(()=>{ slideIndex = (slideIndex+1) % slides.length; showSlide(slideIndex); }, 5200);
+
+    /* ====== REVEAL ON SCROLL ====== */
+    const revealEls = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); obs.unobserve(e.target); } });
+    },{threshold:0.12});
+    revealEls.forEach(el=>obs.observe(el));
+
+    /* ====== SKILL BARS ====== */
+    document.querySelectorAll('.progress').forEach(p=>{
+      const v = parseInt(p.getAttribute('data-value')) || 0;
+      const bar = p.querySelector('i');
+      setTimeout(()=>{ bar.style.width = v + '%'; }, 450);
+    });
+
+    /* ====== NAV HIGHLIGHT + SMOOTH SCROLL ====== */
+    const links = document.querySelectorAll('nav a');
+    function scrollToSection(id){
+      const el = document.getElementById(id);
+      if(!el) return;
+      window.scrollTo({top:el.offsetTop - 86, behavior:'smooth'});
+    }
+    function onScroll(){
+      const fromTop = window.scrollY + 100;
+      document.querySelectorAll('main section').forEach(sec=>{
+        const id = sec.id;
+        if(!id) return;
+        const top = sec.offsetTop;
+        const h = sec.offsetHeight;
+        const link = document.querySelector('nav a[href="#'+id+'"]');
+        if(fromTop >= top && fromTop < top + h){ links.forEach(l=>l.classList.remove('active')); if(link) link.classList.add('active'); }
+      })
+    }
+    window.addEventListener('scroll', onScroll);
+
+    /* ====== MODAL (CINEMATIC) ====== */
+    const modal = document.getElementById('projectModal');
+    const modalVisual = document.getElementById('modalVisual');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalMeta = document.getElementById('modalMeta');
+    const modalLinks = document.getElementById('modalLinks');
+    const modalTags = document.getElementById('modalTags');
+
+    function openModal(key){
+      const p = PROJECTS[key];
+      if(!p) return;
+      // Set blurred background visual (zoom & blur effect)
+      modalVisual.style.backgroundImage = `url('${p.image}')`;
+      modalVisual.style.filter = 'blur(6px) saturate(.95) contrast(.9)';
+
+      // fill text
+      modalTitle.textContent = p.title;
+      modalDesc.textContent = p.desc;
+      modalMeta.textContent = p.meta;
+
+      // tags
+      modalTags.innerHTML = '';
+      if(p.tags && p.tags.length){
+        p.tags.forEach(t => {
+          const span = document.createElement('span');
+          span.className = 'tag';
+          span.textContent = t;
+          modalTags.appendChild(span);
+        });
+      }
+
+      // links (styled)
+      modalLinks.innerHTML = '';
+      p.links.forEach(l => {
+        const a = document.createElement('a');
+        a.className = 'link-btn';
+        a.href = l.url;
+        a.target = '_blank';
+        a.rel = 'noopener noreferrer';
+        a.textContent = l.label;
+        modalLinks.appendChild(a);
+      });
+
+      // show modal with aria
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden','false');
+      document.body.style.overflow = 'hidden';
+      // slight entrance animation for visual
+      modalVisual.animate([{transform:'scale(1.03)'},{transform:'scale(1)'}], {duration:500, easing:'cubic-bezier(.2,.9,.2,1)'});
+    }
+
+    function closeModal(){
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden','true');
+      document.body.style.overflow = '';
+    }
+
+    // Close modal on ESC or click outside content
+    window.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+    modal.addEventListener('click', (e) => {
+      if(e.target === modal) closeModal();
+    });
+
+    /* ====== Tiny helpers ====== */
+    function sendForm(e){ e.preventDefault(); alert('Thanks — message received (demo). Reach out via: priyampandey077@gmail.com'); }
+    function downloadCV(){ window.open('Priyam_SD.pdf', '_blank'); }
+
+    // small visual polish: nav shrink on scroll
+    const navInner = document.querySelector('.nav-inner');
+    window.addEventListener('scroll', ()=>{
+      if(window.scrollY > 40) navInner.style.transform = 'translateY(-6px)';
+      else navInner.style.transform = '';
+    });
+
+    // accessibility: trap focus inside modal when open (basic)
+    document.addEventListener('focus', function(event) {
+      if(modal.style.display === 'flex' && !modal.contains(event.target)){
+        event.stopPropagation();
+        modal.querySelector('.close-btn').focus();
+      }
+    }, true);
+  </script>
+</body>
+</html>
