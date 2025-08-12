@@ -253,8 +253,23 @@
           <p>Collection of sales & market dashboards and analytics built using SQL, Pandas, Excel automation, and Power BI for executive reporting.</p>
           <div class="tags"><span class="tag">Power BI</span><span class="tag">SQL</span><span class="tag">Pandas</span></div>
         </article>
+
+        <! --Fermentation of Grapes for Ethanol Production -->
+        <article class="card" onclick="openModal('fermentation')">
+          <div class="thumb"><img src="images/fermentation.jpg" alt="Fermentation of Grapes"></div>
+          <h3>Fermentation of Grapes for Ethanol Production</h3>
+          <p>Experimental study using Saccharomyces cerevisiae (yeast) to evaluate fermentation outcomes and hazard analysis.</p>
+        </article>
+
+        <!-- Dispersion of Toluene Analysis -->
+      <article class="card" onclick="openModal('toluene')">
+        <div class="thumb"><img src="images/toluene.jpg" alt="Toluene Dispersion"></div>
+        <h3>Dispersion of Toluene Analysis</h3>
+        <p>Simulation-based hazard assessment of toluene release scenarios using ALOHA software.</p>
+      </article>
       </div>
     </section>
+    
 
     <!-- Experience -->
     <section id="experience" class="container reveal">
@@ -383,6 +398,18 @@
           { label: 'Amazon Electronics Analysis', url: 'https://github.com/Priyam0712/amazon-electronics-analysis' }
         ],
         tags: ['Power BI','SQL','Pandas']
+      },
+      fermentation: {
+        title: 'Study of Fermentation of Grapes for Ethanol Production Using Saccharomyces cerevisiae (Yeast)',
+        desc: 'Conducted a fermentation process using Saccharomyces cerevisiae (yeast) by evaluating the varying outcomes of heavy gas releases, thermal radiation, non-exceedance of hazardous levels, potential flammable areas, and the absence of vapor cloud explosions.',
+        links: [],
+        image: 'images/fermentation.jpg'
+      },
+      toluene: {
+        title: 'Study of Dispersion of Toluene through a Tank Hole via ALOHA Software',
+        desc: 'Conducted an analysis to assess and compare the potential threat zones and associated hazards in five distinct scenarios involving the release of toluene by evaluating the varying outcomes of heavy gas releases, thermal radiation, non-exceedance of hazardous levels, potential flammable areas, and the absence of vapor cloud explosions.',
+        links: [],
+        image: 'images/toluene.jpg'
       }
     };
 
@@ -513,4 +540,5 @@
   </script>
 </body>
 </html>
+
 
