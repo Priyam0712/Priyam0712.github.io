@@ -315,12 +315,12 @@
           </div>
         </div>
 
-        <form onsubmit="sendForm(event)">
-          <input class="input" placeholder="Your name" required />
-          <input class="input" type="email" placeholder="Your email" required />
-          <textarea placeholder="Message" required></textarea>
+        <form action="https://formspree.io/f/mrbljang" method="POST">
+          <input class="input" type="text" name="name" placeholder="Your name" required />
+          <input class="input" type="email" name="email" placeholder="Your email" required />
+          <textarea class="input" name="message" placeholder="Message" required></textarea>
           <button type="submit" class="btn btn-primary">Send message</button>
-        </form>
+      </form>
       </div>
     </section>
   </main>
@@ -513,3 +513,4 @@
   </script>
 </body>
 </html>
+
